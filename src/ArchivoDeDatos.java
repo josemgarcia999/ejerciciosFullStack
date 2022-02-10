@@ -34,15 +34,19 @@ public class ArchivoDeDatos {
           edad=-1;
         }
 
-        Persona p = new Persona(nombre.get(), poblacion.orElse("Desconocido"), edad);
+        Persona p = new Persona(nombre.get(), poblacion.get(), edad);
         personas.add(p);
       }
 
     } catch (Exception e) {
       System.err.println("No se encontró un archivo");
     }
+    //Poner poblacion vacía con valor desconocido
+
+    personas.stream().filter(persona -> persona.getPoblacion().equals("")).forEach((p) -> p.setPoblacion("Desconocido"));
+
     // Filtrar personas con edad menor a 25
-    personas.stream().filter(persona -> persona.getEdad() < 25).forEach((p) -> p.toString2());
+    personas.stream().filter(persona -> persona.getEdad() < 25 && persona.getEdad() != -1).forEach((p) -> p.toString2());
 
   }
 }
