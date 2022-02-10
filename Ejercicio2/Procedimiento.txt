@@ -1,0 +1,6 @@
+En primer lugar,instalamos la version de java en la terminal de IntelliJ con C:\Users\josemanuel.garcia\.jdks\openjdk-17.0.2.intellij\bin\java.exe -version   
+Tras ello, generamos de forma manual nuestro fichero jar y tras ello usamos la siguiente linea
+C:\Users\josemanuel.garcia\Desktop\Proyectos\GitHub\ejerciciosFullStack\Ejercic
+io2\out\artifacts\Ejercicio2_jar\Ejercicio2.jar
+Todo esto desde la terminal del propio IntelliJ aunque podemos hacerlo desde cmd, pero habrá que añadir JAVA_HOME a las variables de entorno
+
