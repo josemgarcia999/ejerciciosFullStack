@@ -1,10 +1,7 @@
 package com.example.Ejercicio4;
 
 import netscape.javascript.JSObject;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 
@@ -22,14 +19,15 @@ public class Controlador1 {
 
     }
 
+
     @PostMapping("/useradd")
-    public Persona useradd(){
-        Persona p = new Persona ("Jose Manuel",22,"Úbeda");
+    public Persona useradd(@RequestBody Persona p){
         p.setEdad(p.getEdad()+1);
         return p;
 
 
 
     }
+
 
 }
