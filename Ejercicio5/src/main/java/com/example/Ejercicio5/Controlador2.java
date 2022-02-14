@@ -1,10 +1,8 @@
 package com.example.Ejercicio5;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -13,10 +11,15 @@ import java.util.ArrayList;
 public class Controlador2 {
 
     @Autowired
+    @Qualifier("PersonaServiceImpl")
     PersonaService personaService;
+
+
 
     @Autowired
     CiudadService ciudadService;
+
+
 
     @GetMapping("/getPersona")
     public Persona getPersona(@RequestHeader String nombre, @RequestHeader int edad, @RequestHeader String ciudad){
@@ -26,7 +29,10 @@ public class Controlador2 {
     public ArrayList<Ciudad> devolverCiudades(){
         return ciudadService.devolverCiudades();
     }
-
+    @DeleteMapping("/deleteCiudades")
+    public void eliminarCiudades(){
+        ciudadService.eliminarCiudades();
+    }
 
 
 }

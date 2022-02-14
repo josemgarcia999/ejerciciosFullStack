@@ -9,5 +9,6 @@ public interface PersonaService {
     void ponerNombre(String nombre);
     Persona crearPersona(String nombre, int edad, String ciudad);
     Persona multiplicarEdad();
+    Persona obtenerPersona();
 
 }

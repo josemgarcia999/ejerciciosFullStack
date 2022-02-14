@@ -6,5 +6,5 @@ public interface CiudadService {
 
     void aniadirCiudad(Ciudad c);
     ArrayList<Ciudad> devolverCiudades();
-
+    void eliminarCiudades();
 }

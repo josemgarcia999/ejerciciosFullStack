@@ -1,10 +1,11 @@
 package com.example.Ejercicio5;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 
-@Service
+@Service ("PersonaServiceImpl")
 public class PersonaServiceImp implements PersonaService {
 
     Persona person = new Persona();
@@ -28,6 +29,9 @@ public class PersonaServiceImp implements PersonaService {
 
     public Persona multiplicarEdad(){
         person.setEdad(person.getEdad()*2);
+        return person;
+    }
+    public Persona obtenerPersona(){
         return person;
     }
 

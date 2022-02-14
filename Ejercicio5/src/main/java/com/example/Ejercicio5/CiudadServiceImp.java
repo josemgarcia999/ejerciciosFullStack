@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 @Service
 public class CiudadServiceImp implements CiudadService{
+
     ArrayList<Ciudad> listaCiudades = new ArrayList<>();
 
     public void aniadirCiudad(Ciudad c){
@@ -15,6 +16,11 @@ public class CiudadServiceImp implements CiudadService{
         return listaCiudades;
 
     }
+    public void eliminarCiudades(){
+        listaCiudades.clear();
+
+    }
+
 
 
 }
