@@ -52,6 +52,7 @@ public class PersonaServiceImpl implements PersonaService{
         if(per != null){
             if (p.getNombre()!=null) per.setNombre(p.getNombre());
             if (p.getPoblacion()!=null) per.setNombre(p.getPoblacion());
+            if (p.getEdad()!=-1)per.setEdad(p.getEdad());
 
         }
         return per;
