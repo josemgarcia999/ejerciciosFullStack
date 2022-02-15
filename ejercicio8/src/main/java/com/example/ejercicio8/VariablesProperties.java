@@ -14,7 +14,7 @@ public class VariablesProperties {
     @Value("${my.var2}")
     private String var2;
 
-    @Value("${var3:var3 no tiene valor}")
+    @Value("${VAR_SISTEMA:no tiene valor}")
     private String var3;
 
     public String getVar1() {
