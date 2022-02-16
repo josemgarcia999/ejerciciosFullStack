@@ -8,15 +8,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class controlador {
+
+
   @Value("${url}")
   String url;
 
   @Value("${password}")
   String password;
 
-  @Autowired MiConfiguracion miConfiguracion = new MiConfiguracion();
-  @Autowired Perfil perfil;
+  @Autowired
+  MiConfiguracion miConfiguracion = new MiConfiguracion();
 
+  @Autowired
+  perfil perfil;
 
   @GetMapping("/parametros")
   public String devolverParametros() {
@@ -39,7 +43,7 @@ public class controlador {
   }
 
   @GetMapping("/perfil")
-  public void ejecutarPerfil(){
+  public void ejecutarPerfil() {
     perfil.mifuncion();
   }
 }
