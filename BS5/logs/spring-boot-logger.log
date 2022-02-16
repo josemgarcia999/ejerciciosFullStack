@@ -1,0 +1,20 @@
+2022-02-16 13:45:30,351 INFO org.springframework.boot.StartupInfoLogger [main] Starting Ejercicio10Application using Java 17.0.2 on L2201017 with PID 16788 (C:\Users\josemanuel.garcia\Desktop\Proyectos\GitHub\ejerciciosFullStack\BS5\target\classes started by josemanuel.garcia in C:\Users\josemanuel.garcia\Desktop\Proyectos\GitHub\ejerciciosFullStack\BS5)
+2022-02-16 13:45:30,354 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to default profiles: default
+2022-02-16 13:45:31,178 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port(s): 8080 (http)
+2022-02-16 13:45:31,189 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-8080"]
+2022-02-16 13:45:31,189 INFO org.apache.juli.logging.DirectJDKLog [main] Starting service [Tomcat]
+2022-02-16 13:45:31,190 INFO org.apache.juli.logging.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/9.0.56]
+2022-02-16 13:45:31,245 INFO org.apache.juli.logging.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2022-02-16 13:45:31,246 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 845 ms
+2022-02-16 13:45:31,285 INFO com.example.ejercicio10.Ejercicio10Application [main] An INFO Message
+2022-02-16 13:45:31,285 WARN com.example.ejercicio10.Ejercicio10Application [main] A WARN Message
+2022-02-16 13:45:31,285 ERROR com.example.ejercicio10.Ejercicio10Application [main] An ERROR Message
+2022-02-16 13:45:31,508 INFO org.apache.juli.logging.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-8080"]
+2022-02-16 13:45:31,545 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port(s): 8080 (http) with context path ''
+2022-02-16 13:45:31,553 INFO org.springframework.boot.StartupInfoLogger [main] Started Ejercicio10Application in 1.6 seconds (JVM running for 2.008)
+2022-02-16 13:45:43,571 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-2] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-02-16 13:45:43,572 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Initializing Servlet 'dispatcherServlet'
+2022-02-16 13:45:43,572 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-2] Completed initialization in 0 ms
+2022-02-16 13:45:43,596 INFO com.example.ejercicio10.LoggingController [http-nio-8080-exec-2] An INFO Message
+2022-02-16 13:45:43,597 WARN com.example.ejercicio10.LoggingController [http-nio-8080-exec-2] A WARN Message
+2022-02-16 13:45:43,597 ERROR com.example.ejercicio10.LoggingController [http-nio-8080-exec-2] An ERROR Message
