@@ -18,3 +18,6 @@
 2022-02-16 13:45:43,596 INFO com.example.ejercicio10.LoggingController [http-nio-8080-exec-2] An INFO Message
 2022-02-16 13:45:43,597 WARN com.example.ejercicio10.LoggingController [http-nio-8080-exec-2] A WARN Message
 2022-02-16 13:45:43,597 ERROR com.example.ejercicio10.LoggingController [http-nio-8080-exec-2] An ERROR Message
+2022-02-16 13:56:19,686 ERROR com.example.ejercicio10.Ejercicio10Application [main] An ERROR Message
+2022-02-16 13:56:59,442 WARN com.example.ejercicio10.Ejercicio10Application [main] A WARN Message
+2022-02-16 13:56:59,445 ERROR com.example.ejercicio10.Ejercicio10Application [main] An ERROR Message
