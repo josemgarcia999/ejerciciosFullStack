@@ -19,14 +19,14 @@ public class PersonaEntity {
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   Integer id;
 
-  @NonNull String usuario;
-  @NonNull String password;
-  @NonNull String name;
-  @NonNull String surname;
-  @NonNull String company_email;
-  @NonNull String personal_email;
-  @NonNull String city;
-  @NonNull Boolean active;
+  String usuario;
+  String password;
+  String name;
+  String surname;
+  String company_email;
+  String personal_email;
+  String city;
+  Boolean active;
   Date created_date;
 
   String imagen_url;
@@ -59,6 +59,4 @@ public class PersonaEntity {
 
     setTermination_date(personaDTO.getTermination_date());
   }
-
-
 }
