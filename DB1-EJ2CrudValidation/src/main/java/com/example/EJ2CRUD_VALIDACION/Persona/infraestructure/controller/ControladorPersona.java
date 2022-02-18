@@ -39,7 +39,7 @@ public class ControladorPersona {
     personaService.deletePersona(id);
   }
 
-  @PutMapping("actualizar/{id}")
+  @PutMapping("update/{id}")
   public PersonaOutputDTO actualizarUsuario(@PathVariable Integer id, @RequestBody PersonaImputDTO personaImputDTO) throws Exception {
     return personaService.updatePersona(id,personaImputDTO);
   }
