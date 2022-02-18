@@ -37,37 +37,28 @@ public class PersonaEntity {
     if (personaDTO == null) return;
     setId(personaDTO.getId());
 
-    if (personaDTO.getUsuario() == null) throw new Exception("Usuario no puede ser nulo");
-    else if (personaDTO.getUsuario().length() < 6 || personaDTO.getUsuario().length() > 10)
-      throw new Exception("Usuario debe tener entre 6 y 10 caracteres");
-    else setUsuario(personaDTO.getUsuario());
+    setUsuario(personaDTO.getUsuario());
 
-    if (personaDTO.getPassword() == null) throw new Exception("Password no puede ser nulo");
-    else setPassword(personaDTO.getPassword());
+    setPassword(personaDTO.getPassword());
 
-    if (personaDTO.getName() == null) throw new Exception("Name no puede ser nulo");
-    else setName(personaDTO.getName());
+    setName(personaDTO.getName());
 
-    if (personaDTO.getSurname() == null) throw new Exception("Surname no puede ser nulo");
-    else setSurname(personaDTO.getSurname());
+    setSurname(personaDTO.getSurname());
 
-    if (personaDTO.getCompany_email() == null) throw new Exception("Company_email no puede ser nulo");
-    else setCompany_email(personaDTO.getCompany_email());
+    setCompany_email(personaDTO.getCompany_email());
 
-    if (personaDTO.getPersonal_email() == null) throw new Exception("Personal_email no puede ser nulo");
-    else setPersonal_email(personaDTO.getPersonal_email());
+    setPersonal_email(personaDTO.getPersonal_email());
 
-    if (personaDTO.getCity() == null) throw new Exception("City no puede ser nulo");
-    else setCity(personaDTO.getCity());
+    setCity(personaDTO.getCity());
 
-    if (personaDTO.getActive() == null) throw new Exception("Active no puede ser nulo");
-    else setActive(personaDTO.getActive());
+    setActive(personaDTO.getActive());
 
-    if (personaDTO.getCreated_date() == null) throw new Exception("Created_date no puede ser nulo");
-    else setCreated_date(personaDTO.getCreated_date());
+    setCreated_date(personaDTO.getCreated_date());
 
     setImagen_url(personaDTO.getImagen_url());
 
     setTermination_date(personaDTO.getTermination_date());
   }
+
+
 }
