@@ -1,0 +1,18 @@
+package com.example.EJ31CRUD.Estudiante_Asignatura.infraestructure.controller.dto.imput;
+
+
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+public class EstudianteAsignaturaImputDTO {
+
+    String asignatura;
+    String comments;
+    Date initialDate;
+    Date finishDate;
+
+
+
+}

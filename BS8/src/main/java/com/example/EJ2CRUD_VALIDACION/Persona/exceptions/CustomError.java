@@ -8,7 +8,7 @@ public class CustomError {
     private String message;
 
     public CustomError(Date timestamp, int HttpStatus, String message) {
-
+        super();
         this.timestamp = timestamp;
         this.HttpStatus = HttpStatus;
         this.message = message;
