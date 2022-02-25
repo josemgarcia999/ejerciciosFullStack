@@ -3,9 +3,12 @@ package com.example.EJ31CRUD.Estudiante_Asignatura.application;
 import com.example.EJ31CRUD.Estudiante_Asignatura.domain.EstudianteAsignaturaEntity;
 import com.example.EJ31CRUD.Estudiante_Asignatura.infraestructure.controller.dto.imput.EstudianteAsignaturaImputDTO;
 import com.example.EJ31CRUD.Estudiante_Asignatura.infraestructure.controller.dto.output.EstudianteAsignaturaOutputDTO;
+import com.example.EJ31CRUD.Estudiante_Asignatura.infraestructure.controller.dto.output.EstudianteAsignaturaOutputDTOList;
 import com.example.EJ31CRUD.Estudiante_Asignatura.infraestructure.repository.jpa.EstudianteAsignaturaRepo;
 import com.example.EJ31CRUD.Student.domain.StudentEntity;
 import com.example.EJ31CRUD.Student.infraestructure.repository.jpa.StudentRepo;
+import com.example.EJ31CRUD.excepciones.NotFoundException;
+import com.example.EJ31CRUD.excepciones.UnprocesableException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,33 +37,35 @@ public class EstudianteAsignaturaService implements iEstudianteAsignatura {
   @Override
   public EstudianteAsignaturaOutputDTO findById(String id) throws Exception {
     EstudianteAsignaturaEntity asignatura =
-        asignaturaRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado"));
+        asignaturaRepo.findById(id).orElseThrow(() -> new NotFoundException("No existe el ID"));
     return new EstudianteAsignaturaOutputDTO(asignatura);
   }
 
   @Override
-  public List<EstudianteAsignaturaOutputDTO> getAll() {
+  public EstudianteAsignaturaOutputDTOList getAll() {
     List<EstudianteAsignaturaEntity> asignaturasEntities = asignaturaRepo.findAll();
     List<EstudianteAsignaturaOutputDTO> asignaturas =
         asignaturasEntities.stream()
             .map(a -> new EstudianteAsignaturaOutputDTO(a))
             .collect(Collectors.toList());
-    return asignaturas;
+    EstudianteAsignaturaOutputDTOList estudianteAsignaturaOutputDTOList= new EstudianteAsignaturaOutputDTOList();
+    estudianteAsignaturaOutputDTOList.setEstudianteAsignaturaOutputDTOList(asignaturas);
+    return estudianteAsignaturaOutputDTOList;
   }
 
   @Override
   public void deleteAsignatura(String id) throws Exception {
 
-    EstudianteAsignaturaEntity asignatura = asignaturaRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado"));
+    EstudianteAsignaturaEntity asignatura = asignaturaRepo.findById(id).orElseThrow(() -> new NotFoundException("No existe el ID"));
     if (asignatura.getEstudiantes().isEmpty()) {
       asignaturaRepo.delete(asignatura);
-    }else throw new Exception("No se pueden borrar asignaturas que estan cursando los estudiantes");
+    }else throw new UnprocesableException("No se pueden borrar asignaturas que estan cursando los estudiantes");
 
   }
 
   @Override
   public EstudianteAsignaturaOutputDTO updateAsignatura(String id, EstudianteAsignaturaImputDTO estudianteAsignaturaImputDTO) throws Exception {
-    EstudianteAsignaturaEntity asignatura = asignaturaRepo.findById(id).orElseThrow(() -> new Exception ("Id no encontrado"));
+    EstudianteAsignaturaEntity asignatura = asignaturaRepo.findById(id).orElseThrow(() -> new NotFoundException ("No existe el ID"));
     if (estudianteAsignaturaImputDTO.getAsignatura() != null) {
       asignatura.setAsignatura(estudianteAsignaturaImputDTO.getAsignatura());
     }
@@ -79,7 +84,7 @@ public class EstudianteAsignaturaService implements iEstudianteAsignatura {
   }
   @Override
   public List<EstudianteAsignaturaOutputDTO> mostrarAsignaturas(String id) throws Exception {
-    StudentEntity estudiante = studentRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado"));
+    StudentEntity estudiante = studentRepo.findById(id).orElseThrow(() -> new NotFoundException("No existe el ID"));
     List<EstudianteAsignaturaOutputDTO> listaAsignaturas = new ArrayList<>();
     for (int i = 0; i <estudiante.getAsignaturas().size(); i++) {
       EstudianteAsignaturaOutputDTO asignaturaOutputDTO = new EstudianteAsignaturaOutputDTO(estudiante.getAsignaturas().get(i));

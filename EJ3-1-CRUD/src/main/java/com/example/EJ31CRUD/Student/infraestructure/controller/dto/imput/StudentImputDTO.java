@@ -10,6 +10,7 @@ public class StudentImputDTO {
     Integer numHoursWeek;
     String idProfesor;
     String branch;
+    String comments;
 
 
 

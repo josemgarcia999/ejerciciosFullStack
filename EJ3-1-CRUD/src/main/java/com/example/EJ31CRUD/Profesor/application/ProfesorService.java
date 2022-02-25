@@ -5,9 +5,12 @@ import com.example.EJ31CRUD.Persona.infraestructure.repository.jpa.PersonaRepo;
 import com.example.EJ31CRUD.Profesor.domain.ProfesorEntity;
 import com.example.EJ31CRUD.Profesor.infraestructure.controller.dto.imput.ProfesorImputDTO;
 import com.example.EJ31CRUD.Profesor.infraestructure.controller.dto.output.ProfesorOutputDTO;
+import com.example.EJ31CRUD.Profesor.infraestructure.controller.dto.output.ProfesorOutputDTOList;
 import com.example.EJ31CRUD.Profesor.infraestructure.repository.ProfesorRepo;
 import com.example.EJ31CRUD.Student.domain.StudentEntity;
 import com.example.EJ31CRUD.Student.infraestructure.repository.jpa.StudentRepo;
+import com.example.EJ31CRUD.excepciones.NotFoundException;
+import com.example.EJ31CRUD.excepciones.UnprocesableException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +34,7 @@ public class ProfesorService implements IProfesor {
     ProfesorEntity pr = new ProfesorEntity(profesor);
     if(comprobarIDEstudiantes(studentRepo.findAll(),persona.getId())&&comprobarIDProfesores(profesorRepo.findAll(),persona.getId())){
       pr.setPersona(persona);
-    } else throw new Exception("ID en uso");
+    } else throw new UnprocesableException("ID en uso");
     profesorRepo.saveAndFlush(pr);
     ProfesorOutputDTO profe = new ProfesorOutputDTO(pr);
     return profe;
@@ -40,35 +43,40 @@ public class ProfesorService implements IProfesor {
   @Override
   public ProfesorOutputDTO findProfesoyrById(String id) throws Exception {
     ProfesorEntity pr =
-        profesorRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado"));
+        profesorRepo.findById(id).orElseThrow(() -> new NotFoundException("No existe el ID"));
     ProfesorOutputDTO prof = new ProfesorOutputDTO(pr);
     return prof;
   }
 
   @Override
-  public List<ProfesorOutputDTO> getAll() {
+  public ProfesorOutputDTOList getAll() {
     List<ProfesorEntity> profesorEntities = profesorRepo.findAll();
     List<ProfesorOutputDTO> profesores = new ArrayList<>();
+    ProfesorOutputDTOList profesorOutputDTOList = new ProfesorOutputDTOList();
     for (ProfesorEntity pr : profesorEntities) {
       ProfesorOutputDTO prof = new ProfesorOutputDTO(pr);
       profesores.add(prof);
     }
-    return profesores;
+    profesorOutputDTOList.setProfesorOutputDTOList(profesores);
+    return profesorOutputDTOList;
   }
 
   @Override
   public void deleteProfesor(String id) throws Exception {
-    profesorRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado"));
+    ProfesorEntity profesor = profesorRepo.findById(id).get();
+    if(profesor.getEstudiantes().isEmpty()){
+    profesorRepo.deleteById(id);
+    }else throw  new UnprocesableException("No se puede borrar un profesor con alumnos asignados");
   }
 
   @Override
   public ProfesorOutputDTO updateProfesor(String id, ProfesorImputDTO profesorImputDTO) throws Exception {
-  ProfesorEntity pr = profesorRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado"));
+  ProfesorEntity pr = profesorRepo.findById(id).orElseThrow(() -> new NotFoundException("Id no encontrado"));
   if(profesorImputDTO.getIdProfesor()!= null){
     PersonaEntity p =
             personaRepo
                     .findById(Integer.valueOf(profesorImputDTO.getIdPersona()))
-                    .orElseThrow(() -> new Exception("Id no encontrado"));
+                    .orElseThrow(() -> new NotFoundException("Id no encontrado"));
     pr.setPersona(p);
 
   }

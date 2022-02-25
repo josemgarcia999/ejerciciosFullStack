@@ -8,6 +8,7 @@ import com.example.EJ31CRUD.configuration.StringPrefixedSequenceIdGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -41,6 +42,7 @@ public class ProfesorEntity {
     List<StudentEntity> estudiantes;
 
     String comments;
+    @NonNull
     String branch;
 
 

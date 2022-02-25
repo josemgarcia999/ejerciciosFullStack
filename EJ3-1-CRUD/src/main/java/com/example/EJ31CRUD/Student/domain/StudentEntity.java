@@ -7,6 +7,7 @@ import com.example.EJ31CRUD.Student.infraestructure.controller.dto.imput.Student
 import com.example.EJ31CRUD.configuration.StringPrefixedSequenceIdGenerator;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -40,14 +41,17 @@ public class StudentEntity {
   @JoinColumn(name = "idProfesor")
   ProfesorEntity profesor;
 
-
+  @NonNull
   int numHoursWeek;
+
+  String comments;
+
+  @NonNull
   String branch;
 
 
   @ManyToMany(cascade = {
-          CascadeType.PERSIST,
-          CascadeType.MERGE
+          CascadeType.DETACH
   })
   @JoinTable(
           name = "estudiante_asignaturas",
@@ -56,9 +60,10 @@ public class StudentEntity {
   )
   List<EstudianteAsignaturaEntity> asignaturas;
 
-  public StudentEntity(StudentImputDTO studentImputDTO) {
+  public StudentEntity(StudentImputDTO studentImputDTO){
     if (studentImputDTO == null) return;
     setNumHoursWeek(studentImputDTO.getNumHoursWeek());
     setBranch(studentImputDTO.getBranch());
+    setComments(studentImputDTO.getComments());
   }
 }

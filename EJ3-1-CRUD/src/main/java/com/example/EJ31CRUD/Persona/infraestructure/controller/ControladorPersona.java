@@ -3,11 +3,10 @@ package com.example.EJ31CRUD.Persona.infraestructure.controller;
 import com.example.EJ31CRUD.Persona.application.IPersona;
 import com.example.EJ31CRUD.Persona.infraestructure.controller.dto.imput.PersonaImputDTO;
 import com.example.EJ31CRUD.Persona.infraestructure.controller.dto.output.PersonaOutputDTO;
+import com.example.EJ31CRUD.Persona.infraestructure.controller.dto.output.PersonaOutputDTOList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class ControladorPersona {
@@ -27,14 +26,14 @@ public class ControladorPersona {
   }
 
   @GetMapping()
-  public List<PersonaOutputDTO> getAll(
+  public PersonaOutputDTOList getAll(
           @Value("simple") @RequestParam(name = "outputType", defaultValue = "simple", required = false)
                   String outputType) {
     return personaService.getAllPersonas(outputType);
   }
 
   @GetMapping("{usuario}/usuario")
-  public List<PersonaOutputDTO> buscarPersonaUsuario(@PathVariable String usuario, @Value("simple") @RequestParam(name = "outputType", defaultValue = "simple", required = false)
+  public PersonaOutputDTOList buscarPersonaUsuario(@PathVariable String usuario, @Value("simple") @RequestParam(name = "outputType", defaultValue = "simple", required = false)
           String outputType) {
     return personaService.findByUsuario(usuario,outputType);
   }

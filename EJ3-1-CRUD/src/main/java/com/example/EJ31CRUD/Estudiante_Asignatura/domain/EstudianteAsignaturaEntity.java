@@ -1,11 +1,11 @@
 package com.example.EJ31CRUD.Estudiante_Asignatura.domain;
 
-import com.example.EJ31CRUD.Estudiante_Asignatura.application.EstudianteAsignaturaService;
 import com.example.EJ31CRUD.Estudiante_Asignatura.infraestructure.controller.dto.imput.EstudianteAsignaturaImputDTO;
 import com.example.EJ31CRUD.Student.domain.StudentEntity;
 import com.example.EJ31CRUD.configuration.StringPrefixedSequenceIdGenerator;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -31,12 +31,14 @@ public class EstudianteAsignaturaEntity {
   @Column(name = "id")
   String idAsigntura;
 
-  @ManyToMany(mappedBy = "asignaturas")
+  @ManyToMany(mappedBy = "asignaturas", cascade = CascadeType.PERSIST)
   List<StudentEntity> estudiantes;
 
   String asignatura;
   String comments;
+  @NonNull
   Date initialDate;
+
   Date finishDate;
 
 

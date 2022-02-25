@@ -3,6 +3,7 @@ package com.example.EJ31CRUD.Student.infraestructure.controller;
 import com.example.EJ31CRUD.Student.application.IStudent;
 import com.example.EJ31CRUD.Student.infraestructure.controller.dto.imput.StudentImputDTO;
 import com.example.EJ31CRUD.Student.infraestructure.controller.dto.output.StudentOutputDTO;
+import com.example.EJ31CRUD.Student.infraestructure.controller.dto.output.StudentOutputDTOList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class StudentController {
   }
 
   @GetMapping
-  public List<StudentOutputDTO> getAll() {
+  public StudentOutputDTOList getAll() {
     return studentService.getAll();
   }
 

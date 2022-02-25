@@ -5,11 +5,14 @@ import com.example.EJ31CRUD.Persona.infraestructure.controller.dto.imput.Persona
 import com.example.EJ31CRUD.Persona.infraestructure.controller.dto.output.PersonaOutputDTO;
 import com.example.EJ31CRUD.Persona.infraestructure.controller.dto.output.PersonaOutputDTOFullEstudiante;
 import com.example.EJ31CRUD.Persona.infraestructure.controller.dto.output.PersonaOutputDTOFullProfesor;
+import com.example.EJ31CRUD.Persona.infraestructure.controller.dto.output.PersonaOutputDTOList;
 import com.example.EJ31CRUD.Persona.infraestructure.repository.jpa.PersonaRepo;
 import com.example.EJ31CRUD.Profesor.domain.ProfesorEntity;
 import com.example.EJ31CRUD.Profesor.infraestructure.repository.ProfesorRepo;
 import com.example.EJ31CRUD.Student.domain.StudentEntity;
 import com.example.EJ31CRUD.Student.infraestructure.repository.jpa.StudentRepo;
+import com.example.EJ31CRUD.excepciones.NotFoundException;
+import com.example.EJ31CRUD.excepciones.UnprocesableException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,27 +65,29 @@ public class PersonaService implements IPersona {
   }
 
   @Override
-  public List<PersonaOutputDTO> getAllPersonas(String parametro) {
+  public PersonaOutputDTOList getAllPersonas(String parametro) {
     List<PersonaEntity> personasEntities = personaRepo.findAll();
     List<StudentEntity> estudiantes = studentRepo.findAll();
     List<ProfesorEntity> profesores = profesorRepo.findAll();
     List<PersonaOutputDTO> personaOutputDTOS = new ArrayList<>();
+    List<PersonaOutputDTOFullEstudiante> personaOutputDTOFullEstudiantes = new ArrayList<>();
+    List<PersonaOutputDTOFullProfesor> personaOutputDTOFullProfesores = new ArrayList<>();
+    PersonaOutputDTOList personaOutputDTOList = new PersonaOutputDTOList();
+
     for (PersonaEntity pe : personasEntities) {
       if (parametro.equalsIgnoreCase("full")) {
         if (comprobarIDEstudiantes(estudiantes, pe.getId())) {
           String idEstudiante = devolverIDEstudiante(pe.getId(), estudiantes);
-          System.out.println("Soy estudiante y mi ID es " + idEstudiante);
 
           PersonaOutputDTOFullEstudiante persona1 =
               new PersonaOutputDTOFullEstudiante(pe, studentRepo.findById(idEstudiante).get());
-          personaOutputDTOS.add(persona1);
+          personaOutputDTOFullEstudiantes.add(persona1);
         } else {
           if (comprobarIDProfesores(profesores, pe.getId())) {
             String idProfesor = devolverIDProfesor(pe.getId(), profesores);
-            System.out.println("Soy profesor y mi ID es " + idProfesor);
             PersonaOutputDTOFullProfesor persona2 =
                 new PersonaOutputDTOFullProfesor(pe, profesorRepo.findById(idProfesor).get());
-            personaOutputDTOS.add(persona2);
+            personaOutputDTOFullProfesores.add(persona2);
           } else {
             PersonaOutputDTO persona3 = new PersonaOutputDTO(pe);
             personaOutputDTOS.add(persona3);
@@ -94,36 +99,41 @@ public class PersonaService implements IPersona {
             personasEntities.stream()
                 .map(person -> new PersonaOutputDTO(person))
                 .collect(Collectors.toList());
-        return personas;
+        personaOutputDTOList.setPersonaOutputDtoList(personas);
+        return personaOutputDTOList;
       }
     }
-    return personaOutputDTOS;
+    personaOutputDTOList.setPersonaOutputDtoList(personaOutputDTOS);
+    personaOutputDTOList.setPersonaStudentOutputDtoList(personaOutputDTOFullEstudiantes);
+    personaOutputDTOList.setPersonaProfesorOutputDtoList(personaOutputDTOFullProfesores);
+    return personaOutputDTOList;
   }
 
   @Override
-  public List<PersonaOutputDTO> findByUsuario(String usuario, String parametro) {
+  public PersonaOutputDTOList findByUsuario(String usuario, String parametro) {
     List<PersonaEntity> personas = personaRepo.findAll();
     List<StudentEntity> estudiantes = studentRepo.findAll();
     List<ProfesorEntity> profesores = profesorRepo.findAll();
     List<PersonaOutputDTO> personaOutputDTOS = new ArrayList<>();
+    List<PersonaOutputDTOFullEstudiante> personaOutputDTOFullEstudiantes = new ArrayList<>();
+    List<PersonaOutputDTOFullProfesor> personaOutputDTOFullProfesors = new ArrayList<>();
+    PersonaOutputDTOList personaOutputDTOList = new PersonaOutputDTOList();
+
     for (PersonaEntity p : personas) {
       if (p.getUsuario().equalsIgnoreCase(usuario)) {
         if (parametro.equalsIgnoreCase("full")) {
-          System.out.println("Estoy dentro de full y el id de la persona es " + p.getId());
           if (comprobarIDEstudiantes(estudiantes, p.getId())) {
             String idEstudiante = devolverIDEstudiante(p.getId(), estudiantes);
-            System.out.println("Soy estudiante y mi ID es " + idEstudiante);
 
             PersonaOutputDTOFullEstudiante persona1 =
                 new PersonaOutputDTOFullEstudiante(p, studentRepo.findById(idEstudiante).get());
-            personaOutputDTOS.add(persona1);
+            personaOutputDTOFullEstudiantes.add(persona1);
           } else {
             if (comprobarIDProfesores(profesores, p.getId())) {
               String idProfesor = devolverIDProfesor(p.getId(), profesores);
-              System.out.println("Soy profesor y mi ID es " + idProfesor);
               PersonaOutputDTOFullProfesor persona2 =
                   new PersonaOutputDTOFullProfesor(p, profesorRepo.findById(idProfesor).get());
-              personaOutputDTOS.add(persona2);
+              personaOutputDTOFullProfesors.add(persona2);
             } else {
               PersonaOutputDTO persona3 = new PersonaOutputDTO(p);
               personaOutputDTOS.add(persona3);
@@ -135,7 +145,10 @@ public class PersonaService implements IPersona {
         }
       }
     }
-    return personaOutputDTOS;
+    personaOutputDTOList.setPersonaStudentOutputDtoList(personaOutputDTOFullEstudiantes);
+    personaOutputDTOList.setPersonaProfesorOutputDtoList(personaOutputDTOFullProfesors);
+    personaOutputDTOList.setPersonaOutputDtoList(personaOutputDTOS);
+    return personaOutputDTOList;
   }
 
   @Override
@@ -144,16 +157,16 @@ public class PersonaService implements IPersona {
     List<ProfesorEntity> profesores = profesorRepo.findAll();
     if (comprobarIDEstudiantes(estudiantes, id) && comprobarIDProfesores(profesores, id)) {
       personaRepo.delete(
-          personaRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado")));
+          personaRepo.findById(id).orElseThrow(() -> new NotFoundException("No existe el ID")));
     } else
-      throw new Exception("No se puede borrar una persona asignada a un estudiante o profesor");
+      throw new UnprocesableException("No se puede borrar una persona asignada a un estudiante o profesor");
   }
 
   @Override
   public PersonaOutputDTO updatePersona(Integer id, PersonaImputDTO personaImputDTO)
       throws Exception {
 
-    PersonaEntity p = personaRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado"));
+    PersonaEntity p = personaRepo.findById(id).orElseThrow(() -> new NotFoundException("No existe el ID"));
     if (personaImputDTO.getUsuario().length() < 6 || personaImputDTO.getUsuario().length() > 10) {
       p.setUsuario(personaImputDTO.getUsuario());
     }

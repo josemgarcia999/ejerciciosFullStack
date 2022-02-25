@@ -15,6 +15,7 @@ public class StudentOutputDTO {
   int numHoursWeek;
   String idProfesor;
   String branch;
+  String comments;
   List<String> asignaturas;
 
   public StudentOutputDTO(StudentEntity studentEntity) {
@@ -28,6 +29,7 @@ public class StudentOutputDTO {
     if (studentEntity.getAsignaturas() != null) {
       setAsignaturas(convertirListaAsignaturasaListaIds(studentEntity.getAsignaturas()));
     }
+    setComments(studentEntity.getComments());
   }
 
   List<String> convertirListaAsignaturasaListaIds(List<EstudianteAsignaturaEntity> asignaturas) {

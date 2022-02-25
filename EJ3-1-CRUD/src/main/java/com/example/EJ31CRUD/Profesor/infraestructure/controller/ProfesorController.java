@@ -2,13 +2,11 @@ package com.example.EJ31CRUD.Profesor.infraestructure.controller;
 
 
 import com.example.EJ31CRUD.Profesor.application.IProfesor;
-
 import com.example.EJ31CRUD.Profesor.infraestructure.controller.dto.imput.ProfesorImputDTO;
 import com.example.EJ31CRUD.Profesor.infraestructure.controller.dto.output.ProfesorOutputDTO;
+import com.example.EJ31CRUD.Profesor.infraestructure.controller.dto.output.ProfesorOutputDTOList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("profesor")
@@ -29,11 +27,11 @@ public class ProfesorController {
     }
 
     @GetMapping
-    public List<ProfesorOutputDTO> getAll(){
+    public ProfesorOutputDTOList getAll(){
         return profesorService.getAll();
     }
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public void deleteProfesor(@PathVariable String id) throws Exception {
         profesorService.deleteProfesor(id);
     }

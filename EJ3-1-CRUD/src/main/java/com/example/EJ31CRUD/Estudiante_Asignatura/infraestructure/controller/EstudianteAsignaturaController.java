@@ -1,9 +1,9 @@
 package com.example.EJ31CRUD.Estudiante_Asignatura.infraestructure.controller;
 
 import com.example.EJ31CRUD.Estudiante_Asignatura.application.iEstudianteAsignatura;
-import com.example.EJ31CRUD.Estudiante_Asignatura.domain.EstudianteAsignaturaEntity;
 import com.example.EJ31CRUD.Estudiante_Asignatura.infraestructure.controller.dto.imput.EstudianteAsignaturaImputDTO;
 import com.example.EJ31CRUD.Estudiante_Asignatura.infraestructure.controller.dto.output.EstudianteAsignaturaOutputDTO;
+import com.example.EJ31CRUD.Estudiante_Asignatura.infraestructure.controller.dto.output.EstudianteAsignaturaOutputDTOList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ public class EstudianteAsignaturaController {
     iEstudianteAsignatura asignaturaService;
 
     @GetMapping()
-    public List<EstudianteAsignaturaOutputDTO> mostrarTodasAsignaturas(){
+    public EstudianteAsignaturaOutputDTOList mostrarTodasAsignaturas(){
         return asignaturaService.getAll();
     }
 

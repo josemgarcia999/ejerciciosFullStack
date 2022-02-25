@@ -9,8 +9,10 @@ import com.example.EJ31CRUD.Profesor.infraestructure.repository.ProfesorRepo;
 import com.example.EJ31CRUD.Student.domain.StudentEntity;
 import com.example.EJ31CRUD.Student.infraestructure.controller.dto.imput.StudentImputDTO;
 import com.example.EJ31CRUD.Student.infraestructure.controller.dto.output.StudentOutputDTO;
+import com.example.EJ31CRUD.Student.infraestructure.controller.dto.output.StudentOutputDTOList;
 import com.example.EJ31CRUD.Student.infraestructure.controller.dto.output.StudentOutputFullDTO;
 import com.example.EJ31CRUD.Student.infraestructure.repository.jpa.StudentRepo;
+import com.example.EJ31CRUD.excepciones.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +37,7 @@ public class StudentService implements IStudent {
     if (comprobarIDEstudiantes(studentRepo.findAll(), p.getId())
             && comprobarIDProfesores(profesorRepo.findAll(), p.getId())) {
       s.setPersona(p);
-    } else throw new Exception("ID en uso");
+    } else throw new NotFoundException("ID en uso");
 
 
     if (studentDTO.getIdProfesor() != null) {
@@ -51,8 +53,8 @@ public class StudentService implements IStudent {
 
   @Override
   public StudentOutputDTO findStudentById(String id, String parametro) throws Exception {
-    StudentEntity s = studentRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado"));
-    PersonaEntity pAsociada = personaRepo.findById(s.getPersona().getId()).orElseThrow(() -> new Exception("Id no encontrado"));;
+    StudentEntity s = studentRepo.findById(id).orElseThrow(() -> new NotFoundException("Id no encontrado"));
+    PersonaEntity pAsociada = personaRepo.findById(s.getPersona().getId()).orElseThrow(() -> new NotFoundException("Id no encontrado"));;
     if (parametro.equalsIgnoreCase("full")) {
       StudentOutputFullDTO studentOutputFullDTO = new StudentOutputFullDTO(s);
       return studentOutputFullDTO;
@@ -63,38 +65,40 @@ public class StudentService implements IStudent {
   }
 
   @Override
-  public List<StudentOutputDTO> getAll() {
+  public StudentOutputDTOList getAll() {
     List<StudentEntity> studentEntities = studentRepo.findAll();
     List<StudentOutputDTO> students = new ArrayList<>();
+    StudentOutputDTOList studentOutputDTOList = new StudentOutputDTOList();
     for (StudentEntity st : studentEntities) {
       StudentOutputDTO stu = new StudentOutputDTO(st);
       students.add(stu);
     }
-    return students;
+    studentOutputDTOList.setStudentOutputDTOList(students);
+    return studentOutputDTOList;
   }
 
   public void deleteStudient(String id) throws Exception {
     studentRepo.delete(
-        studentRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado")));
+        studentRepo.findById(id).orElseThrow(() -> new NotFoundException("Id no encontrado")));
   }
 
   @Override
   public StudentOutputDTO updateStudent(String id, StudentImputDTO studentImputDTO)
       throws Exception {
-    StudentEntity s = studentRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado"));
+    StudentEntity s = studentRepo.findById(id).orElseThrow(() -> new NotFoundException("Id no encontrado"));
     if (studentImputDTO.getIdPersona() != null) {
 
       PersonaEntity p =
           personaRepo
               .findById(Integer.valueOf(studentImputDTO.getIdPersona()))
-              .orElseThrow(() -> new Exception("Id no encontrado"));
+              .orElseThrow(() -> new NotFoundException("Id no encontrado"));
       s.setPersona(p);
     }
     if (studentImputDTO.getIdProfesor() != null) {
       ProfesorEntity pr =
           profesorRepo
               .findById(studentImputDTO.getIdProfesor())
-              .orElseThrow(() -> new Exception("Id no encontrado"));
+              .orElseThrow(() -> new NotFoundException("Id no encontrado"));
       s.setProfesor(pr);
     }
 
@@ -112,9 +116,9 @@ public class StudentService implements IStudent {
   @Override
   public StudentOutputDTO addAsignatura(String idEstudiante,List<String> listaAsignaturas) throws Exception {
 
-    StudentEntity s = studentRepo.findById(idEstudiante).orElseThrow(()-> new Exception("No es una asignatura valida"));
+    StudentEntity s = studentRepo.findById(idEstudiante).orElseThrow(()-> new NotFoundException("No es una asignatura valida"));
     for (int i = 0; i < listaAsignaturas.size(); i++) {
-      EstudianteAsignaturaEntity as = asignaturaRepo.findById(listaAsignaturas.get(i)).orElseThrow(()-> new Exception("No es una asignatura valida"));
+      EstudianteAsignaturaEntity as = asignaturaRepo.findById(listaAsignaturas.get(i)).orElseThrow(()-> new NotFoundException("No es una asignatura valida"));
       if(noContieneAsignatura(s.getAsignaturas(),listaAsignaturas.get(i)))
         s.getAsignaturas().add(as);
     }
@@ -125,7 +129,7 @@ public class StudentService implements IStudent {
 
   @Override
   public StudentOutputDTO deleteAsignatura(String idEstudiante, List<String> listaAsignaturas) throws Exception {
-    StudentEntity s = studentRepo.findById(idEstudiante).orElseThrow(()-> new Exception("No es un estudiante valido"));
+    StudentEntity s = studentRepo.findById(idEstudiante).orElseThrow(()-> new NotFoundException("No es un estudiante valido"));
     for (int i = 0; i < listaAsignaturas.size(); i++) {
       System.out.println(listaAsignaturas.get(i));
       EstudianteAsignaturaEntity as = asignaturaRepo.findById(listaAsignaturas.get(i)).orElseThrow(()-> new Exception("No es una asignatura valida"));
