@@ -63,7 +63,7 @@ public class ProfesorService implements IProfesor {
 
   @Override
   public void deleteProfesor(String id) throws Exception {
-    ProfesorEntity profesor = profesorRepo.findById(id).get();
+    ProfesorEntity profesor = profesorRepo.findById(id).orElseThrow(()-> new NotFoundException("No se encuentra profesor con este ID"));
     if(profesor.getEstudiantes().isEmpty()){
     profesorRepo.deleteById(id);
     }else throw  new UnprocesableException("No se puede borrar un profesor con alumnos asignados");
