@@ -49,5 +49,6 @@ public class EstudianteAsignaturaEntity {
     setComments(estudianteAsignaturaImputDTO.getComments());
     setInitialDate(estudianteAsignaturaImputDTO.getInitialDate());
     setFinishDate(estudianteAsignaturaImputDTO.getFinishDate());
+
   }
 }
