@@ -28,7 +28,9 @@ public class CustomersRepositoryImpl{
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<CustomersEntity> query= cb.createQuery(CustomersEntity.class);
 		Root<CustomersEntity> root = query.from(CustomersEntity.class);
-		
+
+
+
 		List<Predicate> predicates = new ArrayList<>();
 		conditions.forEach((field,value) ->
 		{
@@ -61,6 +63,7 @@ public class CustomersRepositoryImpl{
 			}
 			
 		});
+
 		query.select(root).where(predicates.toArray(new Predicate[predicates.size()]));
 		return entityManager.createQuery(query).getResultList(); 		
 	}

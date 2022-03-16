@@ -22,7 +22,7 @@ public class PersonaRepositoryImpl {
     private EntityManager entityManager;
 
 
-    public List<PersonaEntity> getData(HashMap<String, Object> conditions)
+    public List<PersonaEntity> getData(HashMap<String,Object> conditions)
     {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<PersonaEntity> query= cb.createQuery(PersonaEntity.class);
@@ -31,6 +31,9 @@ public class PersonaRepositoryImpl {
 
         String ordenar = "";
         ordenar= String.valueOf(conditions.get("ordenar"));
+
+        Integer pagina = 0;
+        pagina = (Integer) conditions.get("pagina");
 
         List<Predicate> predicates = new ArrayList<>();
         conditions.forEach((field,value) ->
@@ -74,7 +77,16 @@ public class PersonaRepositoryImpl {
             }
         }
 
-        return entityManager.createQuery(query).getResultList();
+        if(pagina == null){
+            pagina=0;
+        }else{
+            pagina = pagina*10;
+        }
+
+        return entityManager.createQuery(query)
+                            .setMaxResults(10)
+                            .setFirstResult(pagina)
+                            .getResultList();
     }
 
 

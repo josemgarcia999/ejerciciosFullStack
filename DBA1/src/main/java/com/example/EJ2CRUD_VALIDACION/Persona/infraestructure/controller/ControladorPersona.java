@@ -21,9 +21,7 @@ public class ControladorPersona {
 
   @Autowired IPersona personaService;
 
-  @Autowired PersonaRepository personaRepo;
 
-  @Autowired EntityManager em;
 
   public static final String GREATER_THAN = "greater";
   public static final String LESS_THAN = "less";
@@ -68,35 +66,10 @@ public class ControladorPersona {
       @RequestParam(required = false, name = "surname") String surname,
       @RequestParam(required = false, name = "created_date") @DateTimeFormat(pattern = "dd-MM-yyyy") Date created_date,
       @RequestParam(required = false, name = "dateCondition") String dateCondition,
-      @RequestParam(required = false, name = "ordenar" )String ordenar)
+      @RequestParam(required = false, name = "ordenar" )String ordenar,
+      @RequestParam(name = "pagina") Integer pagina)
   {
 
-
-    HashMap<String, Object> data = new HashMap<>();
-
-    if (usuario != null) data.put("usuario", usuario);
-    if (name != null) data.put("name", name);
-    if (surname != null) data.put("surname", surname);
-    if (dateCondition == null) dateCondition = GREATER_THAN;
-    if (!dateCondition.equals(GREATER_THAN)
-        && !dateCondition.equals(LESS_THAN)
-        && !dateCondition.equals(EQUAL)) dateCondition = GREATER_THAN;
-    if (created_date != null) {
-      data.put("created_date", created_date);
-      data.put("dateCondition", dateCondition);
-    }
-    if(ordenar != null){
-      data.put("ordenar",ordenar);
-    }
-
-
-    List<PersonaEntity> personas = personaRepo.getData(data);
-    List<PersonaOutputDTO> personasOutputDto = new ArrayList<>();
-
-    for (PersonaEntity persona : personas) {
-      personasOutputDto.add(new PersonaOutputDTO(persona));
-    }
-
-    return personasOutputDto;
+    return personaService.getData(usuario,name,surname,created_date,dateCondition,ordenar,pagina);
   }
 }

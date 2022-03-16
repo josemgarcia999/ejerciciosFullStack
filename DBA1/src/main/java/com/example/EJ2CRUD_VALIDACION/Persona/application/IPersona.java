@@ -3,6 +3,7 @@ package com.example.EJ2CRUD_VALIDACION.Persona.application;
 import com.example.EJ2CRUD_VALIDACION.Persona.infraestructure.controller.dto.imput.PersonaImputDTO;
 import com.example.EJ2CRUD_VALIDACION.Persona.infraestructure.controller.dto.output.PersonaOutputDTO;
 
+import java.util.Date;
 import java.util.List;
 
 public interface IPersona {
@@ -19,4 +20,12 @@ public interface IPersona {
 
   public PersonaOutputDTO updatePersona(Integer id, PersonaImputDTO personaImputDTO)
       throws Exception;
+  public List<PersonaOutputDTO> getData(
+          String usuario,
+          String name,
+          String surname,
+          Date created_date,
+          String dateCondition,
+          String ordenar,
+          Integer pagina);
 }
