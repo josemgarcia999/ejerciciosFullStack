@@ -19,10 +19,10 @@ public class PersonaService implements IPersona {
 
   @Override
   public PersonaOutputDTO añadirUsuario(PersonaImputDTO persona) throws Exception {
-    persona.comprobarDTO();
+    //persona.comprobarDTO();
     PersonaEntity p = new PersonaEntity(persona);
     personaRepo.save(p);
-    PersonaOutputDTO personaOutputDTO = new PersonaOutputDTO(p);
+    PersonaOutputDTO personaOutputDTO = new PersonaOutputDTO(p.getId(),p.getUsuario(),p.getPassword(),p.getName(),p.getSurname(),p.getCompany_email(),p.getPersonal_email(),p.getCity(),p.getActive(),p.getCreated_date(),p.getImagen_url(),p.getTermination_date());
     return personaOutputDTO;
   }
 
@@ -32,7 +32,7 @@ public class PersonaService implements IPersona {
         personaRepo
             .findById(id)
             .orElseThrow(() -> new NotFoundException("Usuario con Id: " + id + " no encontrado"));
-    PersonaOutputDTO personaOutputDTO = new PersonaOutputDTO(p);
+    PersonaOutputDTO personaOutputDTO = new PersonaOutputDTO(p.getId(),p.getUsuario(),p.getPassword(),p.getName(),p.getSurname(),p.getCompany_email(),p.getPersonal_email(),p.getCity(),p.getActive(),p.getCreated_date(),p.getImagen_url(),p.getTermination_date());
     return personaOutputDTO;
   }
 
@@ -41,7 +41,7 @@ public class PersonaService implements IPersona {
     List<PersonaEntity> personasEntities = personaRepo.findAll();
     List<PersonaOutputDTO> personas = new ArrayList<>();
     for (PersonaEntity p : personasEntities) {
-      PersonaOutputDTO per = new PersonaOutputDTO(p);
+      PersonaOutputDTO per = new PersonaOutputDTO(p.getId(),p.getUsuario(),p.getPassword(),p.getName(),p.getSurname(),p.getCompany_email(),p.getPersonal_email(),p.getCity(),p.getActive(),p.getCreated_date(),p.getImagen_url(),p.getTermination_date());
       personas.add(per);
     }
     return personas;
@@ -53,7 +53,7 @@ public class PersonaService implements IPersona {
     List<PersonaOutputDTO> personaOutputDTOS = new ArrayList<>();
     for (PersonaEntity p : personas) {
       if (p.getUsuario().equalsIgnoreCase(usuario)) {
-        PersonaOutputDTO persona = new PersonaOutputDTO(p);
+        PersonaOutputDTO persona = new PersonaOutputDTO(p.getId(),p.getUsuario(),p.getPassword(),p.getName(),p.getSurname(),p.getCompany_email(),p.getPersonal_email(),p.getCity(),p.getActive(),p.getCreated_date(),p.getImagen_url(),p.getTermination_date());
         personaOutputDTOS.add(persona);
       }
     }
@@ -74,56 +74,56 @@ public class PersonaService implements IPersona {
 
     PersonaEntity p = personaRepo.findById(id).orElseThrow(() -> new NotFoundException("No existe el ID"));
    // if (personaImputDTO.getUsuario().length() > 6 && personaImputDTO.getUsuario().length() < 10) {
-      p.setUsuario(personaImputDTO.getUsuario());
+      p.setUsuario(personaImputDTO.usuario());
     //}else {
       //throw new UnprocesableException("No se puede modificar el usuario");
     //}
 
-    if (personaImputDTO.getPassword() != null && personaImputDTO.getPassword() !="" ) {
-      p.setPassword(personaImputDTO.getPassword());
+    if (personaImputDTO.password() != null && personaImputDTO.password() !="" ) {
+      p.setPassword(personaImputDTO.password());
     }else {
       throw new UnprocesableException("Contraseña está vacío");
     }
-    if (personaImputDTO.getName() != null && personaImputDTO.getName() !="") {
-      p.setName(personaImputDTO.getName());
+    if (personaImputDTO.name() != null && personaImputDTO.name() !="") {
+      p.setName(personaImputDTO.name());
     }else {
       throw new UnprocesableException("Nombre está vacío");
     }
-    if (personaImputDTO.getSurname() != null && personaImputDTO.getSurname() !="") {
-      p.setSurname(personaImputDTO.getSurname());
+    if (personaImputDTO.surname() != null && personaImputDTO.surname() !="") {
+      p.setSurname(personaImputDTO.surname());
     }else {
       throw new UnprocesableException("Apellidos está vacío");
     }
-    if (personaImputDTO.getCompany_email() != null && personaImputDTO.getCompany_email() != "") {
-      p.setCompany_email(personaImputDTO.getCompany_email());
+    if (personaImputDTO.company_email() != null && personaImputDTO.company_email() != "") {
+      p.setCompany_email(personaImputDTO.company_email());
     }else {
       throw new UnprocesableException("Company email está vacío");
     }
-    if (personaImputDTO.getPersonal_email() != null && personaImputDTO.getPersonal_email() !="") {
-      p.setPersonal_email(personaImputDTO.getPersonal_email());
+    if (personaImputDTO.personal_email() != null && personaImputDTO.personal_email() !="") {
+      p.setPersonal_email(personaImputDTO.personal_email());
     }else {
       throw new UnprocesableException("PersonalEmail está vacío");
     }
-    if (personaImputDTO.getCity() != null && personaImputDTO.getCity() !="") {
-      p.setCity(personaImputDTO.getCity());
+    if (personaImputDTO.city() != null && personaImputDTO.city() !="") {
+      p.setCity(personaImputDTO.city());
     }else {
       throw new UnprocesableException("Ciudad está vacío");
     }
 
-    if (personaImputDTO.getImagen_url() != null && personaImputDTO.getImagen_url() !="") {
-      p.setImagen_url(personaImputDTO.getImagen_url());
+    if (personaImputDTO.imagen_url() != null && personaImputDTO.imagen_url() !="") {
+      p.setImagen_url(personaImputDTO.imagen_url());
     }else {
       throw new UnprocesableException("URl está vacío");
     }
 
-    if (personaImputDTO.getTermination_date() != null) {
-      p.setTermination_date(personaImputDTO.getTermination_date());
+    if (personaImputDTO.termination_date() != null) {
+      p.setTermination_date(personaImputDTO.termination_date());
     }else {
       throw new UnprocesableException("TerminationDate está vacío");
     }
 
     personaRepo.saveAndFlush(p);
-    PersonaOutputDTO personaOutputDTO = new PersonaOutputDTO(p);
+    PersonaOutputDTO personaOutputDTO = new PersonaOutputDTO(p.getId(),p.getUsuario(),p.getPassword(),p.getName(),p.getSurname(),p.getCompany_email(),p.getPersonal_email(),p.getCity(),p.getActive(),p.getCreated_date(),p.getImagen_url(),p.getTermination_date());
     return personaOutputDTO;
   }
 }

@@ -65,7 +65,7 @@ public class PersonaService implements IPersona {
   public PersonaOutputDTO updatePersona(Integer id, PersonaImputDTO personaImputDTO) throws Exception {
 
     PersonaEntity p = personaRepo.findById(id).orElseThrow(() -> new Exception("Id no encontrado"));
-    if (personaImputDTO.getUsuario().length() < 6 || personaImputDTO.getUsuario().length() > 10) {
+    if (personaImputDTO.getUsuario().length() > 6 || personaImputDTO.getUsuario().length() < 10) {
       p.setUsuario(personaImputDTO.getUsuario());
     }
 
