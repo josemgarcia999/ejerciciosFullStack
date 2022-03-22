@@ -20,8 +20,16 @@ public class Ej2CrudValidacionApplication implements CommandLineRunner {
 	}
 	@Override
 	public void run(String... arg) throws Exception {
+
+    if (arg.length == 0) {
 		storageService.deleteAll();
 		storageService.init();
+	}else{
+		storageService.deleteAll();
+		storageService.setPath(arg.toString());
+		storageService.init();
+	}
+
 	}
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {

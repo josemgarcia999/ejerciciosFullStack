@@ -7,14 +7,30 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
-//@Entity
+@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class FileInfo {
 
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    Integer id;
+    private String nombre;
     private String url;
+    private String extension;
+    Date fecha;
+
+    public FileInfo(String nombre, String url, String extension){
+        setId(id);
+        setNombre(nombre);
+        setExtension(extension);
+        setUrl(url);
+        fecha = new Date();
+
+    }
+
 }
