@@ -11,25 +11,38 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.annotation.Resource;
 
 @SpringBootApplication
-public class Ej2CrudValidacionApplication implements CommandLineRunner {
+public class Ej2CrudValidacionApplication  {
 
 	@Resource
 	IFichero storageService;
 	public static void main(String[] args) {
 		SpringApplication.run(Ej2CrudValidacionApplication.class, args);
 	}
-	@Override
+	/*@Override
 	public void run(String... arg) throws Exception {
 
     if (arg.length == 0) {
+      System.out.println("Valor de los argumentos es 0");
 		storageService.deleteAll();
 		storageService.init();
 	}else{
+      System.out.println("El valor de los argumentos no es 0, es " +args[0]);
 		storageService.deleteAll();
 		storageService.setPath(arg.toString());
 		storageService.init();
 	}
+*/
 
+	@Bean
+	CommandLineRunner init(IFichero fileService) {
+		return (args) -> {
+			fileService.deleteAll();
+			if(args.length == 0){
+				fileService.init(null);
+			}else{
+				storageService.init(args[0]);
+			}
+		};
 	}
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {

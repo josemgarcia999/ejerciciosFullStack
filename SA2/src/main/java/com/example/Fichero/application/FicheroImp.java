@@ -30,13 +30,14 @@ public class FicheroImp implements IFichero {
         return root;
     }
 
-    public void setPath(String ruta){
+    public Path setPath(String ruta){
         Paths.get(ruta);
+        return Paths.get(ruta);
     }
 
-    public void init() {
+    public void init(String ruta) {
         try {
-            Files.createDirectory(root);
+            Files.createDirectory(setPath(ruta));
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize folder for upload!");
         }
@@ -56,6 +57,8 @@ public class FicheroImp implements IFichero {
             throw new RuntimeException("Error: " + e.getMessage());
         }
     }
+
+
 
     @Override
     public void save(MultipartFile file) {
